@@ -30,4 +30,7 @@ ConditionMatcher conditionMatcher = new ConditionMatcher(
         },
     });
 
+//Load current states as new BitInstructor
+conditionMatcher.Execute(new BitInstructor(true , true , true));
+
 ```
