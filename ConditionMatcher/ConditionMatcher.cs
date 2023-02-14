@@ -7,44 +7,50 @@ namespace ConditionMatch{
     public class ConditionMatcher
     {
         private readonly int ConditionCount = 0;
-        public Dictionary<Condition, Action> conditionMap;
-
+        private Dictionary<Condition, Action> conditionMap;
+        
         public ConditionMatcher(Dictionary<Condition, Action> conditionMap)
         {
             this.conditionMap = conditionMap;
             var e = conditionMap.GetEnumerator();
             e.MoveNext();
-            ConditionCount = e.Current.Key.Instructor.BitCount;
+            ConditionCount = e.Current.Key.Instructor.ParameterCount;
         }
 
-        public void Execute(BitInstructor bitInstructor)
+        private void Executor(object[] parameterArray)
         {
-            if(bitInstructor.BitCount != ConditionCount)
+            HashInstructor hashInstructor = new HashInstructor(parameterArray);
+
+            if(hashInstructor.ParameterCount != ConditionCount)
             {
-                throw new Exception($"Mismatching condition count with `bitInstructor`");
+                throw new Exception($"Mismatching condition count with `hashInstructor`");
             }
             foreach(KeyValuePair<Condition, Action> condition in conditionMap)
             {
-                if(condition.Key.Instructor.BitCount != ConditionCount)
+                HashInstructor currentInstructor = condition.Key.Instructor;
+                if(currentInstructor.ParameterCount != ConditionCount)
                 {
                     throw new Exception($"Mismatching condition count at \n => \"{condition.Key.Name}\"");
                 }
-                if (condition.Key.Instructor.Equals(bitInstructor))
+                if(currentInstructor.ignoredIndexes.Count > 0)
+                {
+                    HashInstructor reval = HashInstructor.Revaluate(parameterArray , currentInstructor.ignoredIndexes);
+                    if(currentInstructor.Equals(reval))
+                    {
+                        condition.Value?.Invoke();
+                        continue;
+                    }
+                }
+                if(condition.Key.Instructor.Equals(hashInstructor))
                 {
                     condition.Value?.Invoke();
-                    return;
+                    continue;
                 }
             }
         }
-        public void Execute(params bool[] bitArray)
+        public void Execute(params object[] parameterArray)
         {
-            this.Execute(bitArray);
-        }
-        public void Execute(BitArray bitArray)
-        {
-            bool[] boolArray = new bool[bitArray.Count];
-            bitArray.CopyTo(boolArray,0);
-            this.Execute(boolArray);
+            this.Executor(parameterArray);
         }
 
     }

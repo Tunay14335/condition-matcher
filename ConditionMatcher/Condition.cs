@@ -4,7 +4,7 @@ namespace ConditionMatch{
 
     public class Condition
     {
-        public Condition(string name, BitInstructor instructor)
+        public Condition(string name, HashInstructor instructor)
         {
             this.Name = name;
             this.Instructor = instructor;
@@ -12,7 +12,7 @@ namespace ConditionMatch{
         public override string ToString() => $"{Name} : {Instructor.Value}";
         
         public string Name {get; set;}
-        public BitInstructor Instructor {get; set;}
+        public HashInstructor Instructor {get; set;}
         public int ConditionID => Instructor.Value;
     }
 
