@@ -9,13 +9,13 @@ Makes condition map with initializer structures and execute matcher for invoke t
 using ConditionMatch;
 
 ConditionMatcher conditionMatcher = new ConditionMatcher(
-    new Dictionary<Condition, Action>(){
+    new Dictionary<Condition, Action<object[]>>(){
         {
             new Condition(
                 name: "example condition",
                 instructor: new HashInstructor(true,"example",3.14f)
             ),
-            () => {
+            (parameters) => {
                 //code here
             }
         },
@@ -24,7 +24,7 @@ ConditionMatcher conditionMatcher = new ConditionMatcher(
                 name: "other condition",
                 instructor: new HashInstructor(false,"other",0.02f)
             ),
-            () => {
+            (parameters) => {
                 //code here
             }
         },
@@ -49,13 +49,13 @@ This mode ignore applied parameters. When executing matcher revaluate from param
 using ConditionMatch;
 
 ConditionMatcher conditionMatcher = new ConditionMatcher(
-    new Dictionary<Condition, Action>(){
+    new Dictionary<Condition, Action<object[]>>(){
         {
             new Condition(
                 name: "example condition",
                 instructor: new HashInstructor(true,"example",ParameterMode.ANY)
             ),
-            () => {
+            (parameters) => {
                 //code here
             }
         },
@@ -64,7 +64,7 @@ ConditionMatcher conditionMatcher = new ConditionMatcher(
                 name: "other condition",
                 instructor: new HashInstructor(false,"other",0.02f)
             ),
-            () => {
+            (parameters) => {
                 //code here
             }
         },
