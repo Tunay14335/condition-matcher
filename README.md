@@ -41,7 +41,7 @@ conditionMatcher.Execute(true,"example",3.14f);
 ### ParameterMode.ANY
 
 
-This mode ignore applied parameters. When executing matcher revaluate from parameterArray then creates a new HashInstructor and matching with current Instructor.
+This mode ignore applied parameters. When executing matcher revaluate from parameterArray then creates a new `HashInstructor` and matching with current Instructor.
 
 ### Example
 
