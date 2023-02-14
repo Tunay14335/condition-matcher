@@ -7,9 +7,9 @@ namespace ConditionMatch{
     public class ConditionMatcher
     {
         private readonly int ConditionCount = 0;
-        private Dictionary<Condition, Action> conditionMap;
+        private Dictionary<Condition, Action<object[]>> conditionMap;
         
-        public ConditionMatcher(Dictionary<Condition, Action> conditionMap)
+        public ConditionMatcher(Dictionary<Condition, Action<object[]>> conditionMap)
         {
             this.conditionMap = conditionMap;
             var e = conditionMap.GetEnumerator();
@@ -25,7 +25,7 @@ namespace ConditionMatch{
             {
                 throw new Exception($"Mismatching condition count with `hashInstructor`");
             }
-            foreach(KeyValuePair<Condition, Action> condition in conditionMap)
+            foreach(KeyValuePair<Condition, Action<object[]>> condition in conditionMap)
             {
                 HashInstructor currentInstructor = condition.Key.Instructor;
                 if(currentInstructor.ParameterCount != ConditionCount)
@@ -37,13 +37,13 @@ namespace ConditionMatch{
                     HashInstructor reval = HashInstructor.Revaluate(parameterArray , currentInstructor.ignoredIndexes);
                     if(currentInstructor.Equals(reval))
                     {
-                        condition.Value?.Invoke();
+                        condition.Value?.Invoke(parameterArray);
                         continue;
                     }
                 }
                 if(condition.Key.Instructor.Equals(hashInstructor))
                 {
-                    condition.Value?.Invoke();
+                    condition.Value?.Invoke(parameterArray);
                     continue;
                 }
             }

@@ -14,7 +14,6 @@ namespace ConditionMatch{
                 if(objects[i].GetType() == typeof(ParameterMode))
                 {
                     ignoredIndexes.Add(i);
-                    continue;
                 }
                 value ^= objects[i].GetHashCode();
             }
