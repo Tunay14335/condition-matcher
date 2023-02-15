@@ -7,9 +7,9 @@ namespace ConditionMatch{
     public class ConditionMatcher
     {
         private readonly int ConditionCount = 0;
-        private Dictionary<Condition, Action<object[]>> conditionMap;
+        private ConditionMap conditionMap;
         
-        public ConditionMatcher(Dictionary<Condition, Action<object[]>> conditionMap)
+        public ConditionMatcher(ConditionMap conditionMap)
         {
             this.conditionMap = conditionMap;
             var e = conditionMap.GetEnumerator();
