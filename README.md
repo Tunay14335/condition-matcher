@@ -9,7 +9,7 @@ Makes condition map with initializer structures and execute matcher for invoke t
 using ConditionMatch;
 
 ConditionMatcher conditionMatcher = new ConditionMatcher(
-    new Dictionary<Condition, Action<object[]>>(){
+    new ConditionMap{
         {
             new Condition(
                 name: "example condition",
@@ -49,7 +49,7 @@ This mode ignore applied parameters. When executing matcher revaluate from param
 using ConditionMatch;
 
 ConditionMatcher conditionMatcher = new ConditionMatcher(
-    new Dictionary<Condition, Action<object[]>>(){
+    new ConditionMap{
         {
             new Condition(
                 name: "example condition",
